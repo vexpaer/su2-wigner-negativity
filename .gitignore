@@ -1,0 +1,28 @@
+# Lean 4 / Lake build artifacts
+lean/.lake/
+.lake/
+*.olean
+*.ilean
+*.olean.server
+*.olean.private
+*.ir
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# OS / editor
+.DS_Store
+*~
