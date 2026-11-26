@@ -8,6 +8,8 @@ authors:
     email: "vexpaer@gmail.com"
 date-released: "2026-11-26"
 version: "1.0.0"
+doi: "10.5281/zenodo.24563264"
+url: "https://vexpaer.github.io/su2-wigner-negativity/"
 repository-code: "https://github.com/vexpaer/su2-wigner-negativity"
 license: MIT
 keywords:

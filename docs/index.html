@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Universal Wigner Negativity for Pure Spin States | Ximing Wang</title>
+  <meta name="description" content="Complete proof, Lean 4 formalization (zero sorry), and interactive spherical Wigner explorer settling Open Quantum Problem F18: every pure SU(2) spin state (j >= 1/2) has strictly negative spherical Wigner function." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-inner">
+      <a class="brand" href="#">SU(2) Wigner Negativity</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#trichotomy">Trichotomy</a>
+        <a href="#explorer">Interactive $S^2$ Explorer</a>
+        <a href="#proof">Proof Outline</a>
+        <a href="#lean">Lean 4 Audit</a>
+        <a href="#citation">Cite</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <p class="hero-kicker">Open Quantum Problem F18 &middot; Formalized in Lean 4</p>
+        <h1>Universal Wigner Negativity for Pure Spin States via $\pi$-Rotation Orthogonality</h1>
+
+        <div class="hero-meta">
+          <span><strong>Ximing Wang</strong> (<a href="mailto:vexpaer@gmail.com">vexpaer@gmail.com</a>)</span>
+          <span class="meta-sep">&bull;</span>
+          <span>November 26, 2026</span>
+          <span class="meta-sep">&bull;</span>
+          <a class="doi-inline" href="https://doi.org/10.5281/zenodo.24563264" target="_blank" rel="noopener">DOI: 10.5281/zenodo.24563264</a>
+        </div>
+
+        <p class="hero-abstract">
+          We prove that for every spin $j \in \frac{1}{2}\mathbb{N}$ ($j \ge \frac{1}{2}$), every pure state $|\psi\rangle \in \mathbb{C}^{2j+1}$, and every $\mathrm{SU}(2)$-covariant self-dual Stratonovich&ndash;Weyl kernel on the sphere $S^2$, the spherical Wigner function $W_\psi(\mathbf{n})$ strictly attains negative values. This settles the open conjecture of Davis <em>et al.</em> (2021, 2023) and completes Hudson's theorem across all two-dimensional constant-curvature phase spaces. The entire proof is machine-verified in Lean&nbsp;4 with zero <code>sorry</code> and standard axioms only.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="paper.pdf" target="_blank" rel="noopener">Read Preprint PDF (8 pp.)</a>
+          <a class="btn" href="prl_manuscript.pdf" target="_blank" rel="noopener">PRL Two-Column Draft PDF</a>
+          <a class="btn" href="https://doi.org/10.5281/zenodo.24563264" target="_blank" rel="noopener">Zenodo Archive</a>
+          <a class="btn" href="https://github.com/vexpaer/su2-wigner-negativity" target="_blank" rel="noopener">GitHub Repository</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Result & Trichotomy -->
+    <section class="section" id="trichotomy">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-num">01 &mdash; Main Result</span>
+          <h2>Completing the Constant-Curvature Trichotomy</h2>
+          <p class="section-lead">
+            Together with Hudson's theorem on the flat plane and recent results for the $\mathrm{SU}(1,1)$ discrete series on the hyperboloid, pure-state Wigner positivity is now completely classified across all three geometries of constant Gaussian curvature $\kappa$.
+          </p>
+        </div>
+
+        <div class="theorem-box">
+          <div class="theorem-label">Main Theorem (Universal Spherical Wigner Negativity)</div>
+          <p>
+            For every spin $j \in \frac{1}{2}\mathbb{N}$ ($j \ge \frac{1}{2}$), every unit pure state $|\psi\rangle \in \mathbb{C}^{2j+1}$, and every self-dual $\mathrm{SU}(2)$-covariant Stratonovich&ndash;Weyl kernel $\Delta_j^{(\boldsymbol{\epsilon})}(\mathbf{n})$ (all $2^{2j}$ sign choices $\epsilon_l \in \{\pm 1\}$), there exists a unit axis $\mathbf{u}_* \in S^2$ with $\langle\psi|e^{-i\pi\mathbf{u}_*\cdot\mathbf{J}}|\psi\rangle = 0$, and consequently
+            $\min_{\mathbf{n}\in S^2} W_\psi(\mathbf{n}) < 0$ and $\delta(\psi) := \frac{1}{2}\big(\int_{S^2}|W_\psi|\,d\mu - 1\big) > 0$.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Gaussian Curvature</th>
+                <th>Symmetry Group</th>
+                <th>Phase Space</th>
+                <th>Wigner-Positive Pure States</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$\kappa < 0$</td>
+                <td>$\mathrm{SU}(1,1)$</td>
+                <td>Hyperboloid $H^2$</td>
+                <td>Strictly larger than Perelomov coherent orbit (Klimov <em>et al.</em> 2026; Kam 2026)</td>
+              </tr>
+              <tr>
+                <td>$\kappa = 0$</td>
+                <td>Heisenberg&ndash;Weyl</td>
+                <td>Flat plane $\mathbb{R}^2$</td>
+                <td>Exactly Gaussian / coherent orbit (Hudson 1974)</td>
+              </tr>
+              <tr class="row-highlight">
+                <td>$\kappa > 0$</td>
+                <td>$\mathrm{SU}(2)$</td>
+                <td>Sphere $S^2$</td>
+                <td><strong>Empty ($\emptyset$)</strong> for all $j \in \frac{1}{2}\mathbb{N}$ (This work, Theorem 2)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Explorer -->
+    <section class="section" id="explorer">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-num">02 &mdash; Interactive Visualization</span>
+          <h2>Spherical Wigner Function &amp; $\pi$-Rotation Orthogonality Explorer</h2>
+          <p class="section-lead">
+            Explore exact canonical Stratonovich&ndash;Weyl Wigner functions $W_\psi(\mathbf{n})$ computed directly via Racah Clebsch&ndash;Gordan coefficients and Wigner-$d$ matrices. Drag the sphere to inspect the negative lobes (vermilion) and the orthogonalizing $\pi$-rotation axis $\mathbf{u}_*$ (gold pin).
+          </p>
+        </div>
+
+        <div class="explorer-grid">
+          <div class="canvas-panel">
+            <div class="canvas-stage">
+              <canvas id="wigner-canvas" width="440" height="440" aria-label="Interactive 3D spherical Wigner function visualization"></canvas>
+              <span class="canvas-hint">Drag sphere to rotate in 3D</span>
+            </div>
+            <div class="colorbar-row">
+              <div class="colorbar" aria-hidden="true"></div>
+              <div class="colorbar-labels">
+                <span class="neg-tag" id="cb-min">-0.25</span>
+                <span>0 (nodal curve)</span>
+                <span class="pos-tag" id="cb-max">+0.79</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls-panel">
+            <div class="control-group">
+              <label>Spin Quantum Number $j$</label>
+              <div class="segmented" role="group" aria-label="Select spin j">
+                <button type="button" class="seg-btn" data-twoj="1">j = 1/2</button>
+                <button type="button" class="seg-btn active" data-twoj="2">j = 1</button>
+                <button type="button" class="seg-btn" data-twoj="3">j = 3/2</button>
+                <button type="button" class="seg-btn" data-twoj="4">j = 2</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label>Pure State $|\psi\rangle \in \mathbb{C}^{2j+1}$</label>
+              <div class="preset-grid">
+                <button type="button" class="preset-btn active" data-preset="coherent">Spin Coherent</button>
+                <button type="button" class="preset-btn" data-preset="dicke">Equatorial Dicke</button>
+                <button type="button" class="preset-btn" data-preset="cat">Spin Cat (GHZ)</button>
+                <button type="button" class="preset-btn" data-preset="special">Anticoherent / Mix</button>
+              </div>
+              <button type="button" id="btn-random-state" class="btn btn-sm" style="margin-top: 0.6rem; width: 100%; justify-content: center;">
+                Sample Random Haar Pure State $|\psi\rangle$
+              </button>
+            </div>
+
+            <div class="control-group">
+              <label>Geometric Overlays</label>
+              <div class="toggle-list">
+                <label class="toggle-item">
+                  <input type="checkbox" id="toggle-axis" checked />
+                  <span>Orthogonalizing $\pi$-axis $\mathbf{u}_*$ (gold pin)</span>
+                </label>
+                <label class="toggle-item" id="equator-toggle-wrap">
+                  <input type="checkbox" id="toggle-equator" checked />
+                  <span>Integer-spin zero $\mathbf{n}_*$ &amp; equator $\mathbf{u}(\phi) \perp \mathbf{n}_*$</span>
+                </label>
+                <label class="toggle-item">
+                  <input type="checkbox" id="toggle-nodal" checked />
+                  <span>Highlight nodal boundary $W_\psi(\mathbf{n}) = 0$</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-label">Minimum $\min_{S^2} W_\psi$</div>
+                <div class="metric-value is-neg" id="metric-min-w">&mdash;</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">Negativity $\delta(\psi)$</div>
+                <div class="metric-value is-neg" id="metric-delta">&mdash;</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">$\pi$-Rotation Axis $\mathbf{u}_*$</div>
+                <div class="metric-value" style="font-size: 0.82rem;" id="metric-axis">&mdash;</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">$|\langle\psi|e^{-i\pi\mathbf{u}_*\cdot\mathbf{J}}|\psi\rangle|$</div>
+                <div class="metric-value is-ok" id="metric-overlap">&mdash;</div>
+              </div>
+              <div class="metric-card full">
+                <div class="metric-label">Active State</div>
+                <div class="state-formula" id="state-formula">&mdash;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proof Architecture -->
+    <section class="section" id="proof">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-num">03 &mdash; Proof Architecture</span>
+          <h2>Three Elementary Steps, All Spins Simultaneously</h2>
+          <p class="section-lead">
+            The proof requires no algebraic geometry of Majorana stars and applies uniformly to all $2^{2j}$ self-dual Stratonovich&ndash;Weyl kernels.
+          </p>
+        </div>
+
+        <div class="proof-grid">
+          <article class="proof-card">
+            <div class="proof-step-num">STEP 1 &middot; HALF-INTEGER SPINS</div>
+            <h3>Antipodal Oddness on $S^2$</h3>
+            <p>
+              For $j \in \mathbb{N}_0 + \frac{1}{2}$, the operator $H(\mathbf{u}) = i e^{-i\pi\mathbf{u}\cdot\mathbf{J}}$ has eigenvalues $\pm 1$ and satisfies $H(-\mathbf{u}) = -H(\mathbf{u})$. Thus $h(\mathbf{u}) = \langle\psi|H(\mathbf{u})|\psi\rangle$ is continuous, real, and odd on connected $S^2$, guaranteeing a zero $\mathbf{u}_*$ by the intermediate value theorem.
+            </p>
+          </article>
+
+          <article class="proof-card">
+            <div class="proof-step-num">STEP 2 &middot; INTEGER SPINS</div>
+            <h3>Spherical Harmonic Zeros &amp; Equatorial Average</h3>
+            <p>
+              A short divergence-theorem argument on simply connected $S^2$ shows every nonzero complex spherical harmonic of degree $j \ge 1$ vanishes at some $\mathbf{n}_* \in S^2$. Applied to $Y_\psi(\mathbf{n}) = \langle j,0;\mathbf{n}|\psi\rangle$, the equatorial integral identity forces the real expectation $\langle\psi|e^{-i\pi\mathbf{u}(\phi)\cdot\mathbf{J}}|\psi\rangle$ to have zero mean on the great circle orthogonal to $\mathbf{n}_*$, hence a zero $\mathbf{u}_* \perp \mathbf{n}_*$.
+            </p>
+          </article>
+
+          <article class="proof-card">
+            <div class="proof-step-num">STEP 3 &middot; ANALYTIC OBSTRUCTION</div>
+            <h3>Traciality &amp; Great-Circle Polynomiality</h3>
+            <p>
+              If $W_\psi \ge 0$ everywhere, traciality and $\mathrm{SU}(2)$-covariance turn $|\langle\psi|D^{(j)}(g_*)|\psi\rangle|^2 = 0$ into $W_\psi(\mathbf{n})W_\psi(R_{g_*}^{-1}\mathbf{n}) \equiv 0$. Hence $W_\psi$ vanishes on a nonempty open set, so its restriction to every great circle through that set is a trigonometric polynomial with infinitely many roots, forcing $W_\psi \equiv 0$, contradicting $\int_{S^2} W_\psi\,d\mu = 1$.
+            </p>
+          </article>
+        </div>
+
+        <div class="eq-highlight">
+          $$\frac{1}{2\pi}\int_{0}^{2\pi} e^{-i\pi \mathbf{u}(\phi)\cdot\mathbf{J}}\,d\phi = (-1)^j\, |j, 0; \mathbf{n}\rangle\langle j, 0; \mathbf{n}| \qquad (\mathbf{u}(\phi) \perp \mathbf{n},\; j \in \mathbb{N})$$
+        </div>
+      </div>
+    </section>
+
+    <!-- Lean 4 Formalization -->
+    <section class="section" id="lean">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-num">04 &mdash; Machine Verification</span>
+          <h2>Complete Formalization in Lean&nbsp;4</h2>
+          <p class="section-lead">
+            Every lemma, theorem, corollary, and an explicit spin-$1/2$ Stratonovich&ndash;Weyl witness certifying non-vacuity have been mechanically checked in Lean&nbsp;4 (<code>v4.36.0</code> + <code>Mathlib4</code>).
+          </p>
+        </div>
+
+        <div class="audit-strip">
+          <span><strong>4,083 lines</strong> across 4 modules</span>
+          <span><strong>0</strong> <code>sorry</code> placeholders</span>
+          <span><strong>0</strong> custom axioms</span>
+          <span><code>#print axioms</code>: <code>[propext, Classical.choice, Quot.sound]</code></span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Lean 4 Module</th>
+                <th>Key Verified Declarations</th>
+                <th>Role in Proof</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://github.com/vexpaer/su2-wigner-negativity/blob/main/lean/SU2WignerNegativity/SpinRep.lean" target="_blank" rel="noopener"><code>SpinRep.lean</code></a></td>
+                <td><code>spinRep</code>, <code>spinRep_mul</code>, <code>pi_ortho_odd</code></td>
+                <td>Explicit unitary spin-$N/2$ representation of $\mathrm{SU}(2)$ &amp; half-integer $\pi$-orthogonality</td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/vexpaer/su2-wigner-negativity/blob/main/lean/SU2WignerNegativity/SphericalHarmonicZero.lean" target="_blank" rel="noopener"><code>SphericalHarmonicZero.lean</code></a></td>
+                <td><code>spherical_harmonic_has_zero</code></td>
+                <td>Every $C^2$ complex Laplace eigenfunction on $S^2$ with $\lambda > 0$ has a zero</td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/vexpaer/su2-wigner-negativity/blob/main/lean/SU2WignerNegativity/EquatorialIntegral.lean" target="_blank" rel="noopener"><code>EquatorialIntegral.lean</code></a></td>
+                <td><code>equatorial_integral_identity</code>, <code>pi_ortho_even</code>, <code>pi_ortho_all</code></td>
+                <td>Equatorial $\pi$-rotation average, integer-spin orthogonality &amp; unified theorem for all $N \ge 1$</td>
+              </tr>
+              <tr>
+                <td><a href="https://github.com/vexpaer/su2-wigner-negativity/blob/main/lean/SU2WignerNegativity/WignerNegativity.lean" target="_blank" rel="noopener"><code>WignerNegativity.lean</code></a></td>
+                <td><code>wigner_neg_of_ortho_partner</code>, <code>universal_wigner_negativity</code>, <code>uniform_wigner_negativity_bound</code>, <code>spinHalfStratonovichWeyl</code></td>
+                <td>Universal Wigner negativity, compactness bound &amp; concrete spin-$1/2$ non-vacuity witness</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Citation -->
+    <section class="section" id="citation">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-num">05 &mdash; Citation &amp; Archival Record</span>
+          <h2>Cite This Work</h2>
+          <p class="section-lead">
+            The manuscript, Lean&nbsp;4 formalization, and independent exact-Racah Python verification script are permanently archived on Zenodo.
+          </p>
+        </div>
+
+        <div class="citation-box">
+          <div class="citation-toolbar">
+            <span>BibTeX</span>
+            <button type="button" class="btn btn-sm" id="copy-bibtex-btn">Copy BibTeX</button>
+          </div>
+          <pre id="bibtex-content">@misc{Wang2026SU2Wigner,
+  author       = {Wang, Ximing},
+  title        = {Universal Wigner Negativity for Pure Spin States via $\pi$-Rotation Orthogonality},
+  year         = {2026},
+  month        = nov,
+  publisher    = {Zenodo},
+  version      = {v1.0.0},
+  doi          = {10.5281/zenodo.24563264},
+  url          = {https://doi.org/10.5281/zenodo.24563264}
+}</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; 2026 Ximing Wang &middot; MIT License (code) / CC-BY-4.0 (preprint)</span>
+      <span>
+        <a href="https://doi.org/10.5281/zenodo.24563264" target="_blank" rel="noopener">Zenodo DOI</a>
+        &middot;
+        <a href="https://github.com/vexpaer/su2-wigner-negativity" target="_blank" rel="noopener">GitHub</a>
+        &middot;
+        <a href="https://openquantumproblems.com/p/F18" target="_blank" rel="noopener">Open Quantum Problem F18</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="wigner.js"></script>
+</body>
+</html>

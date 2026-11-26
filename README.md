@@ -1,10 +1,18 @@
 # Universal Wigner Negativity for Pure Spin States (`SU(2)`)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24563264.svg)](https://doi.org/10.5281/zenodo.24563264)
+[![Project Page](https://img.shields.io/badge/Project%20Page-GitHub%20Pages-0b4f6c)](https://vexpaer.github.io/su2-wigner-negativity/)
+[![Lean 4](https://img.shields.io/badge/Lean%204-v4.36.0%20%7C%200%20sorry-2e7d32)](lean/SU2WignerNegativity.lean)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Proof, independent computational verification, and complete **Lean 4** formalization (zero `sorry`, zero custom axioms) of the theorem:
 
 > **Theorem (Universal Spherical Wigner Negativity).** For every spin $j \in \frac{1}{2}\mathbb{N}$ ($j \ge \tfrac{1}{2}$, i.e., $N = 2j \ge 1$), every pure state $|\psi\rangle \in \mathbb{C}^{2j+1}$, and every $\mathrm{SU}(2)$-covariant, self-dual Stratonovich–Weyl spherical Wigner function $W_\psi : S^2 \to \mathbb{R}$, $W_\psi$ strictly attains negative values on $S^2$.
 
 This settles the open conjecture of Davis, Kumari, Mann, and Ghose (2021) / Davis, Hennigar, Mann, and Ghose (2023) (Open Quantum Problem F18) and completes the constant-curvature trichotomy for pure-state Wigner positivity across $H^2$ ($\kappa < 0$), $\mathbb{R}^2$ ($\kappa = 0$), and $S^2$ ($\kappa > 0$).
+
+- **Interactive Project Page:** https://vexpaer.github.io/su2-wigner-negativity/
+- **Zenodo Archival Preprint (DOI):** https://doi.org/10.5281/zenodo.24563264
 
 ---
 
@@ -25,8 +33,10 @@ This settles the open conjecture of Davis, Kumari, Mann, and Ghose (2021) / Davi
 | Path | Description |
 | :--- | :--- |
 | `paper.pdf` / `paper.tex` | Compiled preprint PDF and LaTeX manuscript (*Ximing Wang*, `vexpaer@gmail.com`) |
+| `prl/` | *Physical Review Letters* submission package (`REVTeX 4.2` 4-page Letter + End Matter, 100-word justification, cover letter) |
+| `docs/` | Interactive GitHub Pages project site with 3D spherical Wigner & $\pi$-rotation explorer |
 | `verify_theorem.py` | Independent pure-Python / exact-Racah numerical verification script |
-| `.zenodo.json` / `CITATION.cff` | Zenodo archival metadata and citation metadata |
+| `.zenodo.json` / `CITATION.cff` | Zenodo archival metadata (`DOI: 10.5281/zenodo.24563264`) and citation metadata |
 | `LICENSE` | MIT License |
 | `lean/SU2WignerNegativity.lean` | Root Lean 4 module importing the full formalization |
 | `lean/SU2WignerNegativity/SpinRep.lean` | Explicit unitary spin-$N/2$ representation `spinRep`, group/unitarity laws, and half-integer orthogonality (`pi_ortho_odd`) |

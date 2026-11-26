@@ -1,0 +1,26 @@
+Dear Editors of Physical Review Letters,
+
+Please find enclosed our manuscript titled "Universal Wigner Negativity for Pure Spin States via \pi-Rotation Orthogonality" for consideration as a Letter in Physical Review Letters.
+
+Wigner negativity is a fundamental signature of quantum nonclassicality and a resource for quantum advantage. On the flat phase space R^2, Hudson's theorem famously identifies Gaussian pure states as the unique pure states with non-negative Wigner functions. On the spherical phase space S^2 of spin-j systems, however, Davis, Kumari, Mann, and Ghose [Phys. Rev. Research 3, 033134 (2021)] and Davis, Hennigar, Mann, and Ghose [J. Phys. A 56, 265302 (2023)] conjectured that no pure spin state can have a globally non-negative Stratonovich-Weyl Wigner function (Open Quantum Problem F18). Very recently, Klimov et al. (2026) and Kam (2026) showed that on the negatively curved SU(1,1) hyperboloid, Wigner-positive pure states form a strictly larger set than coherent states, highlighting that settling the positively curved SU(2) conjecture would complete the classification of Hudson's theorem across all constant-curvature homogeneous phase spaces.
+
+In this Letter, we resolve this conjecture in full generality for all spins j in (1/2)N, all pure states, and all 2^{2j} self-dual SU(2)-covariant Stratonovich-Weyl kernels. The proof uncovers a simple geometric theorem of independent interest: every pure spin-j state (j >= 1/2) admits a unit axis u_* on S^2 whose \pi-rotation maps the state to an orthogonal state. For half-integer spins this follows from antipodal oddness; for integer spins it follows from a short divergence-theorem proof that every complex spherical harmonic of degree j >= 1 has a zero, combined with an exact equatorial integral identity relating the average of \pi-rotations on a great circle to the m = 0 Dicke projector.
+
+Because the proof is short, self-contained, and resolves a prominent open problem connecting quantum foundations, phase-space geometry, and spin nonclassicality, we believe it is ideally suited for Physical Review Letters. To ensure airtight mathematical rigor, the entire proof chain has been machine-verified with zero gaps in Lean 4 (4,083 lines, standard Lean axioms only) and cross-checked numerically; all code and proofs are permanently archived on Zenodo (DOI: 10.5281/zenodo.24563264) and GitHub (https://github.com/vexpaer/su2-wigner-negativity).
+
+This manuscript has been archived as a preprint on Zenodo (DOI: 10.5281/zenodo.24563264) and is not under consideration by any other journal. In accordance with the APS Journals policy on the Appropriate Use of AI Tools, our manuscript includes a complete disclosure of AI-assisted tools used under author direction and how every mathematical result was independently machine-verified.
+
+Optional suggested referees (experts directly active on this problem):
+- Shohini Ghose (Wilfrid Laurier University)
+- Robert B. Mann (University of Waterloo)
+- Jack Davis (Inria Paris; formerly University of Waterloo)
+- Andrei B. Klimov (Universidad de Guadalajara)
+- Luis L. Sanchez-Soto (Universidad Complutense de Madrid / Max Planck Institute for the Science of Light)
+- John Martin (University of Liege)
+- Chong-Fei Kam (author of arXiv:2609.07242)
+
+Thank you for your time and consideration.
+
+Sincerely,
+Ximing Wang
+vexpaer@gmail.com
