@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this proof, Lean 4 formalization, or verification code, please cite it as below."
+type: software
+title: "Universal Wigner Negativity for Pure Spin States via pi-Rotation Orthogonality"
+authors:
+  - family-names: "Wang"
+    given-names: "Ximing"
+    email: "vexpaer@gmail.com"
+date-released: "2026-11-26"
+version: "1.0.0"
+repository-code: "https://github.com/vexpaer/su2-wigner-negativity"
+license: MIT
+keywords:
+  - quantum mechanics
+  - Wigner negativity
+  - SU(2)
+  - Stratonovich-Weyl correspondence
+  - Hudson's theorem
+  - Lean 4
+  - formal verification
+  - Open Quantum Problem F18

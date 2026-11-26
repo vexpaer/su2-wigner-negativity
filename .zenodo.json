@@ -1,0 +1,32 @@
+{
+  "title": "Universal Wigner Negativity for Pure Spin States via pi-Rotation Orthogonality",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "publication_date": "2026-11-26",
+  "creators": [
+    {
+      "name": "Wang, Ximing"
+    }
+  ],
+  "description": "We prove that for every spin j in (1/2)N (j >= 1/2), every pure state in C^{2j+1}, and every SU(2)-covariant self-dual Stratonovich-Weyl spherical Wigner function on S^2, the Wigner function strictly attains negative values. This settles the open conjecture of Davis, Kumari, Mann, and Ghose (2021) / Davis, Hennigar, Mann, and Ghose (2023) (Open Quantum Problem F18) and completes the constant-curvature trichotomy for pure-state Wigner positivity. The proof establishes universal pi-rotation orthogonality for all pure spin states via oddness (half-integer spin) and complex spherical harmonic zeros combined with an exact equatorial integral identity (integer spin). This archive includes the LaTeX manuscript (paper.tex, paper.pdf), a complete zero-sorry Lean 4 (v4.36.0 + Mathlib4) formalization verified against standard Lean axioms only, and an independent exact-Racah Python numerical verification script.",
+  "keywords": [
+    "quantum mechanics",
+    "Wigner negativity",
+    "Hudson's theorem",
+    "SU(2)",
+    "Stratonovich-Weyl correspondence",
+    "spherical harmonics",
+    "Lean 4",
+    "formal verification",
+    "Open Quantum Problem F18"
+  ],
+  "license": "cc-by-4.0",
+  "language": "eng",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/vexpaer/su2-wigner-negativity",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

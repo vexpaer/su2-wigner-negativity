@@ -24,8 +24,10 @@ This settles the open conjecture of Davis, Kumari, Mann, and Ghose (2021) / Davi
 
 | Path | Description |
 | :--- | :--- |
-| `paper.tex` | LaTeX manuscript containing the complete mathematical proof and discussion |
+| `paper.pdf` / `paper.tex` | Compiled preprint PDF and LaTeX manuscript (*Ximing Wang*, `vexpaer@gmail.com`) |
 | `verify_theorem.py` | Independent pure-Python / exact-Racah numerical verification script |
+| `.zenodo.json` / `CITATION.cff` | Zenodo archival metadata and citation metadata |
+| `LICENSE` | MIT License |
 | `lean/SU2WignerNegativity.lean` | Root Lean 4 module importing the full formalization |
 | `lean/SU2WignerNegativity/SpinRep.lean` | Explicit unitary spin-$N/2$ representation `spinRep`, group/unitarity laws, and half-integer orthogonality (`pi_ortho_odd`) |
 | `lean/SU2WignerNegativity/SphericalHarmonicZero.lean` | Lemma 2 (`spherical_harmonic_has_zero`) via 1D calculus, Schwarz symmetry, and Fubini on $S^2$ |
