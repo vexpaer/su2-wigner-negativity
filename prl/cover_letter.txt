@@ -22,5 +22,6 @@ Optional suggested referees (experts directly active on this problem):
 Thank you for your time and consideration.
 
 Sincerely,
-Ximing Wang (vexpaer@gmail.com)
-Xilin Hou (1702402958@qq.com)
+Ximing Wang* (vexpaer@gmail.com)
+Xilin Hou* (1702402958@qq.com)
+(*These authors contributed equally to this work.)
