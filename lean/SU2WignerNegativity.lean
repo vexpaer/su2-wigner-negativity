@@ -2,6 +2,9 @@ import SU2WignerNegativity.SpinRep
 import SU2WignerNegativity.SphericalHarmonicZero
 import SU2WignerNegativity.EquatorialIntegral
 import SU2WignerNegativity.WignerNegativity
+import SU2WignerNegativity.FiniteOverlap
+import SU2WignerNegativity.SpinOne
+import SU2WignerNegativity.CoherentNormalization
 
 /-!
 # Universal Wigner Negativity for All Spin-j Pure States (Open Quantum Problem F18)
@@ -17,4 +20,8 @@ Root module importing the complete formalization:
 - `SU2WignerNegativity.WignerNegativity`: Analytic vanishing lemma on `S²`, Lemma 1
   (`wigner_neg_of_ortho_partner`), Theorem 2 (`universal_wigner_negativity`), Corollary 1
   (`uniform_wigner_negativity_bound`), and concrete non-vacuity witness `spinHalfStratonovichWeyl`.
+- `SU2WignerNegativity.SpinOne`: All four signed spin-one kernels and concrete negativity.
+  `AxisKernel` and `SphereMoments` supply the general rotation and integration lemmas.
+- `SU2WignerNegativity.CoherentNormalization`: All-spin identity resolution for the
+  coherent-state symbol, with informational completeness in `CoherentSymbol`.
 -/
