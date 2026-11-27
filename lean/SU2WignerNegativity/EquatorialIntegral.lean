@@ -804,7 +804,7 @@ lemma spinRep_piRot_equator (j : ℕ) (φ : ℝ) (k s : Fin (2 * j + 1)) :
   · simp
 
 /-- Fourier orthogonality: `∫_0^{2π} e^{i m φ} dφ = 0` for every nonzero integer `m : ℤ`. -/
-private lemma integral_exp_int_mul_I (m : ℤ) (hm : m ≠ 0) :
+lemma integral_exp_int_mul_I (m : ℤ) (hm : m ≠ 0) :
     ∫ φ in (0 : ℝ)..(2 * Real.pi), Complex.exp (I * (m : ℂ) * (φ : ℂ)) = 0 := by
   have hmR : (m : ℝ) ≠ 0 := Int.cast_ne_zero.mpr hm
   have h2pi : Complex.exp ((((m : ℝ) * (2 * Real.pi) : ℝ) : ℂ) * I) = 1 := by

@@ -69,7 +69,15 @@ rotated diagonal kernel. For a trace-one spectrum, `probeGram_criterion` proves
 that this kernel satisfies the SW laws exactly when its finite polynomial Gram
 matrix agrees with the pure-state overlaps on the probe list. `polynomialMoment`
 evaluates each entry using exact spherical moments. The identity for the
-physical spectra at every `N ≥ 3` remains open in this Lean development.
+physical spectra at every `N ≥ 3` remains to be verified in Lean.
+
+The coherent-state route also has an all-spin injectivity theorem,
+`coherent_expectation_injective`. It proves that the orbit of the highest-weight
+projector distinguishes every matrix by its coherent-state expectations.
+`coherentSymbol_norm` proves the resolution of the identity under the same
+spherical integral as the Wigner negativity theorem. `sphereAvg_sq_pos` gives a
+positive-definite spherical pairing on polynomial restrictions. These facts support an alternative construction by orthonormalizing
+the coherent-state symbol map.
 
 ---
 

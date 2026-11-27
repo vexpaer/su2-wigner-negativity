@@ -7,7 +7,9 @@ run_cmd do
   for decl in #[``SU2Wigner.pi_ortho_all, ``SU2Wigner.universal_wigner_negativity,
       ``SU2Wigner.uniform_wigner_negativity_bound, ``SU2Wigner.spinHalfStratonovichWeyl,
       ``SU2Wigner.spinOneStratonovichWeyl, ``SU2Wigner.spinOne_eq_diagonal,
-      ``SU2Wigner.canonicalSpinOne_negativity, ``SU2Wigner.probeGram_criterion] do
+      ``SU2Wigner.canonicalSpinOne_negativity, ``SU2Wigner.probeGram_criterion,
+      ``SU2Wigner.coherent_expectation_injective, ``SU2Wigner.coherentSymbol_norm,
+      ``SU2Wigner.sphereAvg_sq_pos] do
     let axioms ← collectAxioms decl
     for ax in axioms do
       unless allowed.contains ax do

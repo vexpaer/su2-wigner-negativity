@@ -5,7 +5,7 @@ on:
       - 'lean/**'
       - '.github/workflows/lean.yml'
   push:
-    branches: [main]
+    branches: [main, 'lean/**']
     paths:
       - 'lean/**'
       - '.github/workflows/lean.yml'

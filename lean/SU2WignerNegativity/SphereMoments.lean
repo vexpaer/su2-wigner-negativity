@@ -146,5 +146,43 @@ theorem sphereAvg_eval (P : MvPolynomial (Fin 3) ℝ) :
   simp_rw [he]
   exact sphereAvg_expansion _ _ _ _ _
 
+/-- The spherical average is positive definite on polynomial restrictions. -/
+theorem sphereAvg_sq_pos (P : MvPolynomial (Fin 3) ℝ)
+    (hnz : ∃ u : S2, MvPolynomial.eval u.1 P ≠ 0) :
+    0 < sphereAvg (fun u => MvPolynomial.eval u.1 P ^ 2) := by
+  let f (θ φ : ℝ) := MvPolynomial.eval (SU2.sphVec θ φ).1 P
+  have hc : Continuous (Function.uncurry f) := continuous_mvPolynomial_sphVec P
+  have hex : ∃ θ ∈ Set.Ioo (0:ℝ) π, ∃ φ ∈ Set.Ioo (0:ℝ) (2*π), f θ φ ≠ 0 := by
+    by_contra! h
+    have hπ : 0 < π := Real.pi_pos
+    have hθ : Set.Ioo (0:ℝ) π ∈ nhds (π/2) := Ioo_mem_nhds (by linarith) (by linarith)
+    have hφ : Set.Ioo (0:ℝ) (2*π) ∈ nhds π := Ioo_mem_nhds hπ (by linarith)
+    have he : (fun p : ℝ × ℝ => MvPolynomial.eval (SU2.sphVec p.1 p.2).1 P)
+        =ᶠ[nhds (π/2,π)] 0 := by
+      rw [nhds_prod_eq]
+      exact Filter.mem_prod_iff.mpr ⟨_, hθ, _, hφ, fun p hp => h p.1 hp.1 p.2 hp.2⟩
+    obtain ⟨u,hu⟩ := hnz
+    exact hu (mvPolynomial_vanish_on_S2_of_eventuallyEq_zero P he u)
+  obtain ⟨θ0,hθ,φ0,hφ,hval⟩ := hex
+  let F (θ φ : ℝ) := Real.sin θ * f θ φ ^ 2
+  let G (θ : ℝ) := ∫ φ in (0:ℝ)..(2*π), F θ φ
+  have hF : Continuous (Function.uncurry F) :=
+    (Real.continuous_sin.comp continuous_fst).mul (hc.pow 2)
+  have hG : Continuous G :=
+    intervalIntegral.continuous_parametric_intervalIntegral_of_continuous' hF _ _
+  have hnn (θ : ℝ) (ht : θ ∈ Set.Icc (0:ℝ) π) (φ : ℝ) : 0 ≤ F θ φ :=
+    mul_nonneg (Real.sin_nonneg_of_nonneg_of_le_pi ht.1 ht.2) (sq_nonneg _)
+  have hG0 : 0 < G θ0 := by
+    apply intervalIntegral.integral_pos (by positivity)
+      (hF.comp (continuous_const.prodMk continuous_id)).continuousOn
+      (fun φ _ => hnn θ0 ⟨hθ.1.le,hθ.2.le⟩ φ)
+    exact ⟨φ0, ⟨hφ.1.le,hφ.2.le⟩, mul_pos (Real.sin_pos_of_pos_of_lt_pi hθ.1 hθ.2) (sq_pos_of_ne_zero hval)⟩
+  have hi : 0 < ∫ θ in (0:ℝ)..π, G θ := by
+    apply intervalIntegral.integral_pos Real.pi_pos hG.continuousOn
+    · intro θ hθ
+      exact intervalIntegral.integral_nonneg (by positivity) (fun φ _ => hnn θ ⟨hθ.1.le,hθ.2⟩ φ)
+    · exact ⟨θ0, ⟨hθ.1.le,hθ.2.le⟩, hG0⟩
+  exact mul_pos (by positivity) hi
+
 end SU2Wigner
 end
