@@ -46,6 +46,9 @@ This settles the open conjecture of Davis, Kumari, Mann, and Ghose (2021) / Davi
 | `lean/SU2WignerNegativity/SpinOne.lean` | All four spin-one sign choices, their polar spectra, and unconditional canonical negativity |
 | `lean/SU2WignerNegativity/AxisKernel.lean` and `DiagonalKernel.lean` | Polynomial covariant spherical symbols from any real polar spectrum, for arbitrary spin |
 | `lean/SU2WignerNegativity/SphereMoments.lean` and `FiniteOverlap.lean` | Exact spherical monomial moments and the finite Gram criterion for a trace-one polar spectrum |
+| `lean/SU2WignerNegativity/CoherentSymbol.lean` and `CoherentNormalization.lean` | All-spin coherent-state informational completeness (`coherent_expectation_injective`) and resolution of the identity (`coherentSymbol_norm`) |
+| `lean/SU2WignerNegativity/SphereInvariance.lean` | Full `SU(2)` rotation invariance of `sphereAvg` and `swIntegral` on Cartesian polynomials (`sphereAvg_actS2_poly`) |
+| `lean/SU2WignerNegativity/CoherentGram.lean` | Coherent-state Gram operator `gramMatrix`, spectral inverse square root `invSqrtGram`, concrete all-spin `canonicalStratonovichWeyl N`, and unconditional all-spin negativity (`canonical_universal_wigner_negativity`, `canonical_uniform_wigner_negativity_bound`) |
 
 ---
 
@@ -58,26 +61,23 @@ With Elan installed, run the same build and axiom audit as CI from the repositor
 bash lean/check.sh
 ```
 
-The all-spin theorem `universal_wigner_negativity` takes a `StratonovichWeylSystem N`
-as input. Concrete constructions cover the canonical spin-1/2 kernel and all four
-spin-one sign choices. For example, `canonicalSpinOne_negativity` accepts only
-a three-component state and its unit-norm proof.
+The all-spin theorem `universal_wigner_negativity` holds for every `StratonovichWeylSystem N`
+(`N = 2j ≥ 1`). Concrete constructions include:
 
-For any `N = 2j` and any real polar spectrum `d`, `diagonalPolynomial_eval` and
-`diagonalSymbol_rotated` identify a Cartesian polynomial with the expectation of the
-rotated diagonal kernel. For a trace-one spectrum, `probeGram_criterion` proves
-that this kernel satisfies the SW laws exactly when its finite polynomial Gram
-matrix agrees with the pure-state overlaps on the probe list. `polynomialMoment`
-evaluates each entry using exact spherical moments. The identity for the
-physical spectra at every `N ≥ 3` remains to be verified in Lean.
-
-The coherent-state route also has an all-spin injectivity theorem,
-`coherent_expectation_injective`. It proves that the orbit of the highest-weight
-projector distinguishes every matrix by its coherent-state expectations.
-`coherentSymbol_norm` proves the resolution of the identity under the same
-spherical integral as the Wigner negativity theorem. `sphereAvg_sq_pos` gives a
-positive-definite spherical pairing on polynomial restrictions. These facts support an alternative construction by orthonormalizing
-the coherent-state symbol map.
+- **All spins `N : ℕ` (`CoherentGram.lean`)**: `canonicalStratonovichWeyl N` constructs a
+  concrete `StratonovichWeylSystem N` for every spin by symmetric orthonormalization (`G⁻¹/²`)
+  of the coherent-state (Husimi) symbol map, using `coherent_expectation_injective`,
+  `coherentSymbol_norm`, `sphereAvg_sq_pos`, and `sphereAvg_actS2_poly` (`SphereInvariance.lean`).
+  This yields unconditional all-spin theorems `canonical_universal_wigner_negativity` and
+  `canonical_uniform_wigner_negativity_bound` for every `N ≥ 1`.
+- **Explicit low-spin closed forms**: `spinHalfStratonovichWeyl` (`N = 1`) and all four
+  signed spin-one kernels `spinOneStratonovichWeyl` (`N = 2`, with `canonicalSpinOne_negativity`).
+- **Diagonal polar-spectrum criterion (`DiagonalKernel.lean`, `FiniteOverlap.lean`)**: For any
+  `N = 2j` and any trace-one real polar spectrum `d`, `probeGram_criterion` characterizes when
+  the rotated diagonal kernel satisfies the SW laws via a finite polynomial Gram matrix.
+  Explicit closed-form identification of the polar spectra of `canonicalStratonovichWeyl N`
+  with the Brif–Mann / Varilly–Gracia-Bondia Racah multipole weights for `N ≥ 3` remains an
+  optional refinement.
 
 ---
 
