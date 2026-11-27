@@ -5,7 +5,7 @@
 [![Lean 4](https://img.shields.io/badge/Lean%204-v4.36.0%20%7C%200%20sorry-2e7d32)](lean/SU2WignerNegativity.lean)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Proof, independent computational verification, and complete **Lean 4** formalization (zero `sorry`, zero custom axioms) of the theorem:
+Proof, independent computational verification, and a **Lean 4** formalization of the following implication for every self-dual Stratonovich–Weyl system:
 
 > **Theorem (Universal Spherical Wigner Negativity).** For every spin $j \in \frac{1}{2}\mathbb{N}$ ($j \ge \tfrac{1}{2}$, i.e., $N = 2j \ge 1$), every pure state $|\psi\rangle \in \mathbb{C}^{2j+1}$, and every $\mathrm{SU}(2)$-covariant, self-dual Stratonovich–Weyl spherical Wigner function $W_\psi : S^2 \to \mathbb{R}$, $W_\psi$ strictly attains negative values on $S^2$.
 
@@ -43,40 +43,33 @@ This settles the open conjecture of Davis, Kumari, Mann, and Ghose (2021) / Davi
 | `lean/SU2WignerNegativity/SphericalHarmonicZero.lean` | Lemma 2 (`spherical_harmonic_has_zero`) via 1D calculus, Schwarz symmetry, and Fubini on $S^2$ |
 | `lean/SU2WignerNegativity/EquatorialIntegral.lean` | Equatorial integral identity (`equatorial_integral_identity`), integer-spin (`pi_ortho_even`), and universal (`pi_ortho_all`) $\pi$-rotation orthogonality |
 | `lean/SU2WignerNegativity/WignerNegativity.lean` | `StratonovichWeylSystem`, Lemma 1 (`wigner_neg_of_ortho_partner`), Theorem 2 (`universal_wigner_negativity`), Corollary 1 (`uniform_wigner_negativity_bound`), and concrete spin-$1/2$ witness (`spinHalfStratonovichWeyl`) |
+| `lean/SU2WignerNegativity/SpinOne.lean` | All four spin-one sign choices, their polar spectra, and unconditional canonical negativity |
+| `lean/SU2WignerNegativity/AxisKernel.lean` and `DiagonalKernel.lean` | Polynomial covariant spherical symbols from any real polar spectrum, for arbitrary spin |
+| `lean/SU2WignerNegativity/SphereMoments.lean` and `FiniteOverlap.lean` | Exact spherical monomial moments and the finite Gram criterion for a trace-one polar spectrum |
 
 ---
 
 ## Building and Auditing the Lean 4 Formalization
 
-Requires Lean `v4.36.0` (managed via `elan`, pinned in `lean/lean-toolchain`).
+The project pins Lean 4.36.0 and the Mathlib revision in the Lake manifest.
+With Elan installed, run the same build and axiom audit as CI from the repository root.
 
 ```bash
-cd lean
-lake exe cache get
-lake build
+bash lean/check.sh
 ```
 
-### Axiom Audit
+The all-spin theorem `universal_wigner_negativity` takes a `StratonovichWeylSystem N`
+as input. Concrete constructions cover the canonical spin-1/2 kernel and all four
+spin-one sign choices. For example, `canonicalSpinOne_negativity` accepts only
+a three-component state and its unit-norm proof.
 
-All main theorems and the explicit non-vacuity witness depend **only** on Lean's standard axioms `[propext, Classical.choice, Quot.sound]` (zero `sorry`, zero custom `axiom`s):
-
-```bash
-cd lean
-lake env lean --stdin <<'EOF'
-import SU2WignerNegativity
-#print axioms SU2Wigner.spinRep_mul
-#print axioms SU2Wigner.spinRep_conjTranspose_mul_self
-#print axioms SU2Wigner.spherical_harmonic_has_zero
-#print axioms SU2Wigner.equatorial_integral_identity
-#print axioms SU2Wigner.pi_ortho_odd
-#print axioms SU2Wigner.pi_ortho_even
-#print axioms SU2Wigner.pi_ortho_all
-#print axioms SU2Wigner.wigner_neg_of_ortho_partner
-#print axioms SU2Wigner.universal_wigner_negativity
-#print axioms SU2Wigner.uniform_wigner_negativity_bound
-#print axioms SU2Wigner.spinHalfStratonovichWeyl
-EOF
-```
+For any `N = 2j` and any real polar spectrum `d`, `diagonalPolynomial_eval` and
+`diagonalSymbol_rotated` identify a Cartesian polynomial with the expectation of the
+rotated diagonal kernel. For a trace-one spectrum, `probeGram_criterion` proves
+that this kernel satisfies the SW laws exactly when its finite polynomial Gram
+matrix agrees with the pure-state overlaps on the probe list. `polynomialMoment`
+evaluates each entry using exact spherical moments. The identity for the
+physical spectra at every `N ≥ 3` remains open in this Lean development.
 
 ---
 
