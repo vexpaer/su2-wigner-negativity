@@ -5,6 +5,8 @@ import SU2WignerNegativity.WignerNegativity
 import SU2WignerNegativity.FiniteOverlap
 import SU2WignerNegativity.SpinOne
 import SU2WignerNegativity.CoherentNormalization
+import SU2WignerNegativity.SphereInvariance
+import SU2WignerNegativity.CoherentGram
 
 /-!
 # Universal Wigner Negativity for All Spin-j Pure States (Open Quantum Problem F18)
@@ -24,4 +26,10 @@ Root module importing the complete formalization:
   `AxisKernel` and `SphereMoments` supply the general rotation and integration lemmas.
 - `SU2WignerNegativity.CoherentNormalization`: All-spin identity resolution for the
   coherent-state symbol, with informational completeness in `CoherentSymbol`.
+- `SU2WignerNegativity.SphereInvariance`: Full `SU(2)` rotation invariance of `sphereAvg` and
+  `swIntegral` on Cartesian polynomials via cyclic moment symmetry and Euler factorization.
+- `SU2WignerNegativity.CoherentGram`: Coherent-state Gram operator `G`, its spectral inverse
+  square root `G⁻¹/²`, concrete all-spin `canonicalStratonovichWeyl N`, and unconditional
+  universal Wigner negativity (`canonical_universal_wigner_negativity`) and uniform bounds
+  (`canonical_uniform_wigner_negativity_bound`) for all `N ≥ 1`.
 -/
